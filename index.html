@@ -1,397 +1,385 @@
+cat > /mnt/user-data/outputs/kia-final/index.html << 'EOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>K.I.A Home Service</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>K.I.A Home Service</title>
   <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="#" class="brand">
-        <img src="logo.png" alt="K.I.A Home Service logo" class="brand-logo" onerror="this.style.display='none';document.querySelector('.brand-fallback').style.display='inline-block';" />
-        <span class="brand-fallback">K.I.A</span>
-        <span class="brand-text">K.I.A Home Service</span>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="#" class="logo-link">
+        <img src="logo.png" alt="K.I.A Home Service" class="logo-img"
+             onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='flex'" />
+        <span class="logo-fallback" id="logo-fallback">K.I.A</span>
       </a>
       <nav class="nav">
-        <a href="#services">Services</a>
-        <a href="#bundles">Bundles</a>
-        <a href="#contact">Contact</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#bundles" class="nav-link">Bundles</a>
+        <a href="#subscriptions" class="nav-link">Subscriptions</a>
+        <a href="#contact" class="nav-link">Contact</a>
       </nav>
       <div class="header-actions">
-        <button class="btn-bubble btn-bubble--outline" onclick="openQuoteFromNav()">Free Quote</button>
-        <button class="btn-bubble btn-bubble--primary" onclick="scrollToBooking()">Book Now</button>
+        <a href="#quote" class="btn-bubble btn-bubble--outline">Free Quote</a>
+        <a href="#services" class="btn-bubble btn-bubble--primary">Book Now</a>
       </div>
-      <button class="hamburger" aria-label="Toggle navigation" onclick="toggleMobileNav()">
+      <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
     </div>
-    <nav class="mobile-nav" id="mobile-nav">
-      <a href="#services" onclick="toggleMobileNav()">Services</a>
-      <a href="#bundles" onclick="toggleMobileNav()">Bundles</a>
-      <a href="#contact" onclick="toggleMobileNav()">Contact</a>
-      <button class="btn-bubble btn-bubble--outline btn-full" onclick="openQuoteFromNav();toggleMobileNav()">Free Quote</button>
-      <button class="btn-bubble btn-bubble--primary btn-full" onclick="scrollToBooking();toggleMobileNav()">Book Now</button>
-    </nav>
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#bundles" class="nav-link">Bundles</a>
+      <a href="#subscriptions" class="nav-link">Subscriptions</a>
+      <a href="#contact" class="nav-link">Contact</a>
+      <a href="#quote" class="btn-bubble btn-bubble--outline btn-full">Free Quote</a>
+      <a href="#services" class="btn-bubble btn-bubble--primary btn-full">Book Now</a>
+    </div>
   </header>
 
-  <main>
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container hero-inner">
-        <div class="hero-content">
-          <div class="pill-tag">Premium Home Services</div>
-          <h1>Your Property,<br><span class="hero-highlight">Spotless.</span></h1>
-          <p class="hero-subtext">
-            K.I.A Home Service delivers meticulous window cleaning, power washing, car detailing, and curated bundles for your property.
-          </p>
-          <div class="hero-actions">
-            <button class="btn-bubble btn-bubble--primary btn-bubble--lg" onclick="scrollToBooking()">Book a Service</button>
-            <button class="btn-bubble btn-bubble--ghost btn-bubble--lg" onclick="openQuoteFromNav()">Get a Free Quote</button>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <span class="hero-tag reveal">Premium Home Services</span>
+      <h1 class="hero-headline reveal">Your Property,<br /><em>Spotless.</em></h1>
+      <p class="hero-sub reveal">Window cleaning, power washing, car detailing & more — done right, every time.</p>
+      <div class="hero-btns reveal">
+        <a href="#services" class="btn-bubble btn-bubble--primary btn-bubble--lg">Book a Service</a>
+        <a href="#quote" class="btn-bubble btn-bubble--ghost btn-bubble--lg">Get a Free Quote</a>
+      </div>
+    </div>
+    <div class="hero-orb"></div>
+  </section>
+
+  <!-- CAR DETAILING -->
+  <section class="services" id="services">
+    <div class="section-inner">
+      <div class="section-label reveal">Detail Packages</div>
+      <h2 class="section-title reveal">Car Detailing 🚗</h2>
+      <p class="section-sub reveal">Professional detailing packages for sedans, SUVs, and trucks.</p>
+      <div class="tiers-grid">
+
+        <div class="tier-card reveal">
+          <div class="tier-badge tier-badge--bronze">Bronze</div>
+          <h4 class="tier-name">Bronze Sedan</h4>
+          <p class="tier-desc">Exterior wash, interior vacuum, window wipe-down.</p>
+          <div class="tier-meta">~1 hr</div>
+          <div class="tier-price">$120.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Car Detailing – Bronze Sedan', '$120.00')">Book Appointment</button>
+        </div>
+
+        <div class="tier-card reveal">
+          <div class="tier-badge tier-badge--bronze">Bronze</div>
+          <h4 class="tier-name">Bronze SUV/Truck</h4>
+          <p class="tier-desc">Full Bronze package scaled for larger vehicles.</p>
+          <div class="tier-meta">~1 hr</div>
+          <div class="tier-price">$140.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Car Detailing – Bronze SUV/Truck', '$140.00')">Book Appointment</button>
+        </div>
+
+        <div class="tier-card reveal">
+          <div class="tier-badge tier-badge--silver">Silver</div>
+          <h4 class="tier-name">Silver Sedan</h4>
+          <p class="tier-desc">Deep interior clean, dashboard treatment, tire shine.</p>
+          <div class="tier-meta">~1.5 hrs</div>
+          <div class="tier-price">$180.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Car Detailing – Silver Sedan', '$180.00')">Book Appointment</button>
+        </div>
+
+        <div class="tier-card reveal">
+          <div class="tier-badge tier-badge--silver">Silver</div>
+          <h4 class="tier-name">Silver SUV/Truck</h4>
+          <p class="tier-desc">Silver-level deep clean for larger vehicles.</p>
+          <div class="tier-meta">~1.5 hrs</div>
+          <div class="tier-price">$210.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Car Detailing – Silver SUV/Truck', '$210.00')">Book Appointment</button>
+        </div>
+
+        <div class="tier-card reveal">
+          <div class="tier-badge tier-badge--gold">Gold</div>
+          <h4 class="tier-name">Gold Sedan</h4>
+          <p class="tier-desc">Paint decontamination, leather conditioning, engine bay clean.</p>
+          <div class="tier-meta">~2 hrs</div>
+          <div class="tier-price">$280.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Car Detailing – Gold Sedan', '$280.00')">Book Appointment</button>
+        </div>
+
+        <div class="tier-card reveal">
+          <div class="tier-badge tier-badge--gold">Gold</div>
+          <h4 class="tier-name">Gold SUV/Truck</h4>
+          <p class="tier-desc">Ultimate Gold detail for trucks and full-size SUVs.</p>
+          <div class="tier-meta">~2 hrs</div>
+          <div class="tier-price">$320.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Car Detailing – Gold SUV/Truck', '$320.00')">Book Appointment</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WINDOW & POWER -->
+  <section class="section-alt">
+    <div class="section-inner">
+      <div class="two-col-services">
+        <div>
+          <div class="section-label reveal">Crystal Clear</div>
+          <h2 class="section-title reveal">Window Cleaning 🪟</h2>
+          <p class="section-sub reveal">Residential and commercial window cleaning. Priced by property — get a free quote.</p>
+          <div class="tiers-grid tiers-grid--2">
+            <div class="tier-card reveal">
+              <div class="tier-badge">Residential</div>
+              <h4 class="tier-name">Residential Windows</h4>
+              <p class="tier-desc">Interior & exterior cleaning for homes of all sizes.</p>
+              <div class="tier-price">Custom Quote</div>
+              <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openQuoteModal('Window Cleaning – Residential')">Get a Free Quote</button>
+            </div>
+            <div class="tier-card reveal">
+              <div class="tier-badge">Commercial</div>
+              <h4 class="tier-name">Commercial Windows</h4>
+              <p class="tier-desc">Storefronts, offices, and commercial buildings.</p>
+              <div class="tier-price">Custom Quote</div>
+              <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openQuoteModal('Window Cleaning – Commercial')">Get a Free Quote</button>
+            </div>
+            <div class="tier-card reveal">
+              <div class="tier-badge">Weekly</div>
+              <h4 class="tier-name">Weekly Window Washing</h4>
+              <p class="tier-desc">Recurring weekly service to keep your windows spotless.</p>
+              <div class="tier-price">$264.00/wk</div>
+              <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Weekly Window Washing', '$264.00/week')">Book Appointment</button>
+            </div>
           </div>
         </div>
-        <div class="hero-side">
-          <div class="hero-card">
-            <h2>Trusted, Detailed, On-Time.</h2>
-            <p>Serving your home and vehicles with care, clarity, and consistency.</p>
-            <ul>
-              <li>Professional window cleaning</li>
-              <li>Power washing for exterior surfaces</li>
-              <li>Car detailing packages</li>
-              <li>Subscriptions and bundles</li>
-            </ul>
+
+        <div>
+          <div class="section-label reveal">High Pressure</div>
+          <h2 class="section-title reveal">Power Washing 💧</h2>
+          <p class="section-sub reveal">Driveways, decks, siding & more. Priced by area — get a free quote.</p>
+          <div class="tiers-grid tiers-grid--2">
+            <div class="tier-card reveal">
+              <div class="tier-badge">Standard</div>
+              <h4 class="tier-name">Pressure Washing</h4>
+              <p class="tier-desc">High-pressure cleaning for any exterior surface.</p>
+              <div class="tier-price">Custom Quote</div>
+              <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openQuoteModal('Pressure Washing')">Get a Free Quote</button>
+            </div>
+            <div class="tier-card reveal">
+              <div class="tier-badge">Quarterly</div>
+              <h4 class="tier-name">Quarterly Pressure Washing</h4>
+              <p class="tier-desc">Scheduled quarterly washing to keep your property pristine year-round.</p>
+              <div class="tier-price">Custom Quote</div>
+              <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openQuoteModal('Quarterly Pressure Washing')">Get a Free Quote</button>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- SERVICES -->
-    <section id="services" class="section section-light">
-      <div class="container">
-        <p class="section-label">What We Do</p>
-        <h2 class="section-heading">Core Services</h2>
-        <p class="section-subtext">
-          Clear, simple offerings designed around your property’s real needs.
-        </p>
+  <!-- BUNDLES -->
+  <section class="services" id="bundles">
+    <div class="section-inner">
+      <div class="section-label reveal">Save More</div>
+      <h2 class="section-title reveal">Bundles 📦</h2>
+      <p class="section-sub reveal">Combine services for the best value.</p>
+      <div class="tiers-grid">
 
-        <div class="service-group">
-          <h3>Window Cleaning 🪟</h3>
-          <div class="tiers-grid">
-            <article class="tier-card">
-              <span class="badge badge-default">Residential</span>
-              <h4>Residential Windows</h4>
-              <p>Crystal-clear windows for your home, inside and out.</p>
-              <p class="tier-meta">Custom Quote</p>
-              <button class="btn-bubble btn-bubble--primary btn-full"
-                      onclick="openQuoteForService('Residential Windows')">
-                Get a Free Quote
-              </button>
-            </article>
-
-            <article class="tier-card">
-              <span class="badge badge-default">Commercial</span>
-              <h4>Commercial Windows</h4>
-              <p>Professional window cleaning for storefronts and buildings.</p>
-              <p class="tier-meta">Custom Quote</p>
-              <button class="btn-bubble btn-bubble--primary btn-full"
-                      onclick="openQuoteForService('Commercial Windows')">
-                Get a Free Quote
-              </button>
-            </article>
-          </div>
+        <div class="tier-card reveal">
+          <div class="tier-badge tier-badge--bronze">Bronze</div>
+          <h4 class="tier-name">Clean View Bundle Bronze</h4>
+          <p class="tier-desc">Window cleaning + car detailing at the Bronze level.</p>
+          <div class="tier-price">$199.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Clean View Bundle Bronze', '$199.00')">Book Appointment</button>
         </div>
 
-        <div class="service-group">
-          <h3>Power Washing 💧</h3>
-          <div class="tiers-grid">
-            <article class="tier-card">
-              <span class="badge badge-default">Exterior</span>
-              <h4>Pressure Washing</h4>
-              <p>Refresh driveways, patios, siding, and more.</p>
-              <p class="tier-meta">Custom Quote</p>
-              <button class="btn-bubble btn-bubble--primary btn-full"
-                      onclick="openQuoteForService('Pressure Washing')">
-                Get a Free Quote
-              </button>
-            </article>
-          </div>
+        <div class="tier-card reveal">
+          <div class="tier-badge tier-badge--silver">Silver</div>
+          <h4 class="tier-name">Clean View Silver</h4>
+          <p class="tier-desc">Silver-tier window cleaning and car detailing bundled.</p>
+          <div class="tier-price">$259.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Clean View Silver', '$259.00')">Book Appointment</button>
         </div>
 
-        <div class="service-group">
-          <h3>Car Detailing 🚗</h3>
-          <div class="tiers-grid">
-            <article class="tier-card">
-              <span class="badge badge-bronze">Bronze</span>
-              <h4>Bronze Sedan</h4>
-              <p class="tier-meta">~1 hr · $120.00</p>
-              <button class="btn-bubble btn-bubble--primary btn-full"
-                      onclick="openBooking('Bronze Sedan', 120)">
-                Book Now
-              </button>
-            </article>
-
-            <article class="tier-card">
-              <span class="badge badge-bronze">Bronze</span>
-              <h4>Bronze SUV/Truck</h4>
-              <p class="tier-meta">~30 mins · $140.00</p>
-              <button class="btn-bubble btn-bubble--primary btn-full"
-                      onclick="openBooking('Bronze SUV/Truck', 140)">
-                Book Now
-              </button>
-            </article>
-
-            <article class="tier-card">
-              <span class="badge badge-silver">Silver</span>
-              <h4>Silver Sedan</h4>
-              <p class="tier-meta">~30 mins · $180.00</p>
-              <button class="btn-bubble btn-bubble--primary btn-full"
-                      onclick="openBooking('Silver Sedan', 180)">
-                Book Now
-              </button>
-            </article>
-
-            <article class="tier-card">
-              <span class="badge badge-silver">Silver</span>
-              <h4>Silver SUV/Truck</h4>
-              <p class="tier-meta">~30 mins · $210.00</p>
-              <button class="btn-bubble btn-bubble--primary btn-full"
-                      onclick="openBooking('Silver SUV/Truck', 210)">
-                Book Now
-              </button>
-            </article>
-
-            <article class="tier-card">
-              <span class="badge badge-gold">Gold</span>
-              <h4>Gold Sedan</h4>
-              <p class="tier-meta">~30 mins · $280.00</p>
-              <button class="btn-bubble btn-bubble--primary btn-full"
-                      onclick="openBooking('Gold Sedan', 280)">
-                Book Now
-              </button>
-            </article>
-
-            <article class="tier-card">
-              <span class="badge badge-gold">Gold</span>
-              <h4>Gold SUV/Truck</h4>
-              <p class="tier-meta">~30 mins · $320.00</p>
-              <button class="btn-bubble btn-bubble--primary btn-full"
-                      onclick="openBooking('Gold SUV/Truck', 320)">
-                Book Now
-              </button>
-            </article>
-          </div>
+        <div class="tier-card reveal">
+          <div class="tier-badge tier-badge--gold">Gold</div>
+          <h4 class="tier-name">Clean View Gold</h4>
+          <p class="tier-desc">Premium window cleaning + Gold car detailing.</p>
+          <div class="tier-price">$359.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Clean View Gold', '$359.00')">Book Appointment</button>
         </div>
 
-        <div class="service-group">
-          <h3>Subscriptions 📈</h3>
-          <div class="tiers-grid">
-            <article class="tier-card">
-              <span class="badge badge-default">Plan</span>
-              <h4>Monthly Plan</h4>
-              <p>Recurring service to keep your property consistently fresh.</p>
-              <p class="tier-meta">Custom Quote</p>
-              <button class="btn-bubble btn-bubble--primary btn-full"
-                      onclick="openQuoteForService('Monthly Plan')">
-                Get a Free Quote
-              </button>
-            </article>
-
-            <article class="tier-card">
-              <span class="badge badge-default">Plan</span>
-              <h4>Bi-Weekly Plan</h4>
-              <p>More frequent visits for high-traffic homes and properties.</p>
-              <p class="tier-meta">Custom Quote</p>
-              <button class="btn-bubble btn-bubble--primary btn-full"
-                      onclick="openQuoteForService('Bi-Weekly Plan')">
-                Get a Free Quote
-              </button>
-            </article>
-          </div>
+        <div class="tier-card reveal">
+          <div class="tier-badge">Small</div>
+          <h4 class="tier-name">Exterior Refresh (Small)</h4>
+          <p class="tier-desc">Power washing + window cleaning for small properties.</p>
+          <div class="tier-price">$199.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Exterior Refresh Bundle – Small', '$199.00')">Book Appointment</button>
         </div>
+
+        <div class="tier-card reveal">
+          <div class="tier-badge">Medium</div>
+          <h4 class="tier-name">Exterior Refresh (Med)</h4>
+          <p class="tier-desc">Power washing + window cleaning for medium properties.</p>
+          <div class="tier-price">$299.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Exterior Refresh Bundle – Medium', '$299.00')">Book Appointment</button>
+        </div>
+
+        <div class="tier-card reveal">
+          <div class="tier-badge">Large</div>
+          <h4 class="tier-name">Exterior Refresh (Large)</h4>
+          <p class="tier-desc">Large property exterior refresh — price based on scope.</p>
+          <div class="tier-price">Custom Quote</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openQuoteModal('Exterior Refresh Bundle – Large')">Get a Free Quote</button>
+        </div>
+
+        <div class="tier-card reveal">
+          <div class="tier-badge tier-badge--bronze">Bronze</div>
+          <h4 class="tier-name">Ultimate Property Clean Bronze</h4>
+          <p class="tier-desc">Windows, power washing, and car detailing at Bronze level.</p>
+          <div class="tier-price">$349.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Ultimate Property Clean Bronze', '$349.00')">Book Appointment</button>
+        </div>
+
+        <div class="tier-card reveal">
+          <div class="tier-badge tier-badge--silver">Silver</div>
+          <h4 class="tier-name">Ultimate Property Clean Silver</h4>
+          <p class="tier-desc">Silver-level full property clean across all services.</p>
+          <div class="tier-price">$409.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Ultimate Property Clean Silver', '$409.00')">Book Appointment</button>
+        </div>
+
+        <div class="tier-card reveal">
+          <div class="tier-badge tier-badge--gold">Gold</div>
+          <h4 class="tier-name">Ultimate Property Clean Gold</h4>
+          <p class="tier-desc">Gold-level detailing, power washing, and window cleaning.</p>
+          <div class="tier-price">$469.00</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Ultimate Property Clean Gold', '$469.00')">Book Appointment</button>
+        </div>
+
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- BUNDLES -->
-    <section id="bundles" class="section">
-      <div class="container">
-        <p class="section-label">Curated Packages</p>
-        <h2 class="section-heading">Bundles</h2>
-        <p class="section-subtext">
-          Combine services into value-focused bundles tailored to your property.
-        </p>
+  <!-- SUBSCRIPTIONS -->
+  <section class="section-alt" id="subscriptions">
+    <div class="section-inner">
+      <div class="section-label reveal">Recurring Service</div>
+      <h2 class="section-title reveal">Subscriptions 🔁</h2>
+      <p class="section-sub reveal">Stay on schedule with regular service plans.</p>
+      <div class="tiers-grid">
 
-        <div class="tiers-grid">
-          <article class="tier-card">
-            <span class="badge badge-bronze">Bronze</span>
-            <h4>Clean View Bundle Bronze</h4>
-            <p class="tier-meta">~30 mins · $199.00</p>
-            <button class="btn-bubble btn-bubble--primary btn-full"
-                    onclick="openBooking('Clean View Bundle Bronze', 199)">
-              Book Now
-            </button>
-          </article>
-
-          <article class="tier-card">
-            <span class="badge badge-silver">Silver</span>
-            <h4>Clean View Silver</h4>
-            <p class="tier-meta">~30 mins · $259.00</p>
-            <button class="btn-bubble btn-bubble--primary btn-full"
-                    onclick="openBooking('Clean View Silver', 259)">
-              Book Now
-            </button>
-          </article>
-
-          <article class="tier-card">
-            <span class="badge badge-gold">Gold</span>
-            <h4>Clean View Gold</h4>
-            <p class="tier-meta">~30 mins · $359.00</p>
-            <button class="btn-bubble btn-bubble--primary btn-full"
-                    onclick="openBooking('Clean View Gold', 359)">
-              Book Now
-            </button>
-          </article>
-
-          <article class="tier-card">
-            <span class="badge badge-bronze">Bronze</span>
-            <h4>Exterior Refresh Bundle (Small)</h4>
-            <p class="tier-meta">~30 mins · $199.00</p>
-            <button class="btn-bubble btn-bubble--primary btn-full"
-                    onclick="openBooking('Exterior Refresh Bundle (Small)', 199)">
-              Book Now
-            </button>
-          </article>
-
-          <article class="tier-card">
-            <span class="badge badge-silver">Silver</span>
-            <h4>Exterior Refresh Bundle (Med)</h4>
-            <p class="tier-meta">~30 mins · $299.00</p>
-            <button class="btn-bubble btn-bubble--primary btn-full"
-                    onclick="openBooking('Exterior Refresh Bundle (Med)', 299)">
-              Book Now
-            </button>
-          </article>
-
-          <article class="tier-card">
-            <span class="badge badge-default">Custom</span>
-            <h4>Exterior Refresh Bundle (Large)</h4>
-            <p class="tier-meta">~30 mins · Custom Quote</p>
-            <button class="btn-bubble btn-bubble--primary btn-full"
-                    onclick="openQuoteForService('Exterior Refresh Bundle (Large)')">
-              Get a Free Quote
-            </button>
-          </article>
-
-          <article class="tier-card">
-            <span class="badge badge-bronze">Bronze</span>
-            <h4>Ultimate Property Clean Bronze</h4>
-            <p class="tier-meta">~30 mins · $349.00</p>
-            <button class="btn-bubble btn-bubble--primary btn-full"
-                    onclick="openBooking('Ultimate Property Clean Bronze', 349)">
-              Book Now
-            </button>
-          </article>
-
-          <article class="tier-card">
-            <span class="badge badge-silver">Silver</span>
-            <h4>Ultimate Property Clean Silver</h4>
-            <p class="tier-meta">~30 mins · $409.00</p>
-            <button class="btn-bubble btn-bubble--primary btn-full"
-                    onclick="openBooking('Ultimate Property Clean Silver', 409)">
-              Book Now
-            </button>
-          </article>
-
-          <article class="tier-card">
-            <span class="badge badge-gold">Gold</span>
-            <h4>Ultimate Property Clean Gold</h4>
-            <p class="tier-meta">~30 mins · $469.00</p>
-            <button class="btn-bubble btn-bubble--primary btn-full"
-                    onclick="openBooking('Ultimate Property Clean Gold', 469)">
-              Book Now
-            </button>
-          </article>
+        <div class="tier-card reveal">
+          <div class="tier-badge">Monthly</div>
+          <h4 class="tier-name">Sedan Monthly Subscription</h4>
+          <p class="tier-desc">Monthly recurring detail service for sedans.</p>
+          <div class="tier-price">$216.00/mo</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('Sedan Monthly Subscription', '$216.00/month')">Book Appointment</button>
         </div>
+
+        <div class="tier-card reveal">
+          <div class="tier-badge">Weekly</div>
+          <h4 class="tier-name">SUV/Truck Weekly Detail</h4>
+          <p class="tier-desc">Weekly detailing service for SUVs and trucks.</p>
+          <div class="tier-price">$256.00/wk</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openBooking('SUV/Truck Weekly Detail', '$256.00/week')">Book Appointment</button>
+        </div>
+
+        <div class="tier-card reveal">
+          <div class="tier-badge">Monthly</div>
+          <h4 class="tier-name">Monthly Plan</h4>
+          <p class="tier-desc">Custom monthly service plan for your property. We'll tailor it to your needs.</p>
+          <div class="tier-price">Custom Quote</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openQuoteModal('Monthly Plan')">Get a Free Quote</button>
+        </div>
+
+        <div class="tier-card reveal">
+          <div class="tier-badge">Bi-Weekly</div>
+          <h4 class="tier-name">Bi-Weekly Plan</h4>
+          <p class="tier-desc">More frequent service for high-use properties and vehicles.</p>
+          <div class="tier-price">Custom Quote</div>
+          <button class="btn-bubble btn-bubble--primary tier-btn" onclick="openQuoteModal('Bi-Weekly Plan')">Get a Free Quote</button>
+        </div>
+
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- FREE QUOTE SECTION -->
-    <section id="quote" class="section section-light">
-      <div class="container">
-        <p class="section-label">No Obligation</p>
-        <h2 class="section-heading">Get a Free Quote</h2>
-        <p class="section-subtext">
-          Share a few details and we’ll respond within 24 hours.
-        </p>
-
-        <div class="quote-card">
+  <!-- FREE QUOTE SECTION -->
+  <section class="quote-section" id="quote">
+    <div class="section-inner">
+      <div class="section-label reveal">No Obligation</div>
+      <h2 class="section-title reveal">Get a Free Quote</h2>
+      <p class="section-sub reveal">Tell us about your property and we'll get back to you within 24 hours.</p>
+      <div class="quote-form-wrap reveal">
+        <div class="quote-form">
           <div class="form-row">
-            <div class="form-field">
-              <label for="quote-name">Name</label>
-              <input type="text" id="quote-name" />
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" id="q-name" placeholder="John Smith" />
             </div>
-            <div class="form-field">
-              <label for="quote-contact">Phone / Email</label>
-              <input type="text" id="quote-contact" />
+            <div class="form-group">
+              <label>Phone / Email</label>
+              <input type="text" id="q-contact" placeholder="your@email.com or 480-000-0000" />
             </div>
           </div>
-
-          <div class="form-field">
-            <label for="quote-address">Address</label>
-            <input type="text" id="quote-address" />
+          <div class="form-row">
+            <div class="form-group">
+              <label>Address</label>
+              <input type="text" id="q-address" placeholder="123 Main St, City, State" />
+            </div>
+            <div class="form-group">
+              <label>Service Needed</label>
+              <select id="q-service">
+                <option value="">Select a service...</option>
+                <option>Window Cleaning</option>
+                <option>Power Washing</option>
+                <option>Car Detailing</option>
+                <option>Subscription Plan</option>
+                <option>Bundle Package</option>
+                <option>Other / Not Sure</option>
+              </select>
+            </div>
           </div>
-
-          <div class="form-field">
-            <label for="quote-service">Service</label>
-            <select id="quote-service">
-              <option>Window Cleaning</option>
-              <option>Power Washing</option>
-              <option>Car Detailing</option>
-              <option>Subscription Plan</option>
-              <option>Bundle Package</option>
-              <option>Other</option>
-            </select>
+          <div class="form-group">
+            <label>Details / Notes</label>
+            <textarea id="q-details" placeholder="Describe your property, any special requests, or questions..."></textarea>
           </div>
-
-          <div class="form-field">
-            <label for="quote-details">Details</label>
-            <textarea id="quote-details" rows="4"></textarea>
-          </div>
-
-          <button class="btn-bubble btn-bubble--primary btn-full"
-                  onclick="submitQuoteForm()">
-            Send My Quote Request
-          </button>
-
-          <p class="fine-print">
-            We’ll respond within 24 hours. No spam, ever.
-          </p>
+          <button class="btn-bubble btn-bubble--primary btn-bubble--lg btn-full" onclick="submitQuoteForm()">Send My Quote Request</button>
+          <p class="form-note">We'll respond within 24 hours. No spam, ever.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="section section-contact">
-      <div class="container">
-        <p class="section-label">Contact</p>
-        <h2 class="section-heading">Contact Us</h2>
-        <p class="section-subtext">
-          Have a question or special request? Reach out anytime.
-        </p>
-
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="section-inner">
+      <div class="section-label reveal">Get In Touch</div>
+      <h2 class="section-title reveal">Contact Us</h2>
+      <p class="section-sub reveal">Have a question? We're here to help.</p>
+      <div class="contact-info reveal">
         <div class="contact-row">
-          <span class="contact-icon">✉️</span>
-          <a href="mailto:homeservicekia@gmail.com" class="contact-email">
-            homeservicekia@gmail.com
-          </a>
+          <span>📧</span>
+          <a href="mailto:homeservicekia@gmail.com">homeservicekia@gmail.com</a>
+        </div>
+        <div class="contact-row">
+          <span>📱</span>
+          <a href="tel:4804829507">(480) 482-9507</a>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
   <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
+  <footer class="footer">
+    <div class="footer-inner">
       <span class="footer-brand">K.I.A Home Service</span>
       <span class="footer-copy">© 2025 All rights reserved.</span>
     </div>
@@ -400,80 +388,95 @@
   <!-- BOOKING MODAL -->
   <div class="modal-overlay" id="booking-modal">
     <div class="modal">
-      <button class="modal-close" onclick="closeModal('booking-modal')">✕</button>
-      <h3>Book Service</h3>
-      <p id="booking-summary"></p>
-      <div class="form-field">
-        <label for="booking-name">Name</label>
-        <input type="text" id="booking-name" />
+      <button class="modal-close" onclick="closeModal('booking-modal')">&#x2715;</button>
+      <h3 class="modal-title">Book an Appointment</h3>
+      <div class="modal-service-pill" id="booking-service-name"></div>
+      <div class="modal-price" id="booking-price"></div>
+
+      <div class="form-group">
+        <label>Your Name *</label>
+        <input type="text" id="b-name" placeholder="John Smith" />
       </div>
-      <div class="form-field">
-        <label for="booking-contact">Phone / Email</label>
-        <input type="text" id="booking-contact" />
+      <div class="form-group">
+        <label>Phone Number *</label>
+        <input type="tel" id="b-phone" placeholder="480-000-0000" />
       </div>
-      <div class="form-field">
-        <label for="booking-date">Preferred Date</label>
-        <input type="date" id="booking-date" />
+      <div class="form-group">
+        <label>Email Address *</label>
+        <input type="email" id="b-email" placeholder="your@email.com" />
       </div>
-      <div class="form-field">
-        <label for="booking-time">Preferred Time</label>
-        <input type="time" id="booking-time" />
+      <div class="form-group">
+        <label>Service Address *</label>
+        <input type="text" id="b-address" placeholder="123 Main St, City, State" />
       </div>
-      <div class="form-field">
-        <label for="booking-address">Address</label>
-        <input type="text" id="booking-address" />
+
+      <!-- DATE PICKER -->
+      <div class="form-group">
+        <label>Select Date *</label>
+        <input type="date" id="b-date" onchange="loadTimeSlots()" min="" />
       </div>
-      <button class="btn-bubble btn-bubble--primary btn-full"
-              onclick="proceedToPayment()">
-        Proceed to Payment
+
+      <!-- TIME SLOTS -->
+      <div class="form-group" id="time-slot-group" style="display:none;">
+        <label>Select Time *</label>
+        <div class="time-slots" id="time-slots"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Notes (optional)</label>
+        <textarea id="b-notes" placeholder="Any special requests or details about your property..."></textarea>
+      </div>
+
+      <button class="btn-bubble btn-bubble--primary btn-bubble--lg btn-full" id="book-btn" onclick="submitBooking()">
+        Confirm Appointment Request
       </button>
-      <p class="fine-print">Secure payment powered by Stripe.</p>
+      <p class="form-note">We'll confirm your appointment within 24 hours.</p>
     </div>
   </div>
 
   <!-- QUOTE MODAL -->
   <div class="modal-overlay" id="quote-modal">
     <div class="modal">
-      <button class="modal-close" onclick="closeModal('quote-modal')">✕</button>
-      <h3>Request a Quote</h3>
-      <p id="quote-selected-pill" class="pill-tag pill-tag--blue"></p>
-      <div class="form-field">
-        <label for="modal-quote-name">Name</label>
-        <input type="text" id="modal-quote-name" />
+      <button class="modal-close" onclick="closeModal('quote-modal')">&#x2715;</button>
+      <h3 class="modal-title">Free Quote Request</h3>
+      <div class="modal-service-pill" id="quote-service-name"></div>
+
+      <div class="form-group">
+        <label>Your Name *</label>
+        <input type="text" id="qm-name" placeholder="John Smith" />
       </div>
-      <div class="form-field">
-        <label for="modal-quote-contact">Phone / Email</label>
-        <input type="text" id="modal-quote-contact" />
+      <div class="form-group">
+        <label>Phone Number *</label>
+        <input type="tel" id="qm-phone" placeholder="480-000-0000" />
       </div>
-      <div class="form-field">
-        <label for="modal-quote-address">Address</label>
-        <input type="text" id="modal-quote-address" />
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="qm-email" placeholder="your@email.com" />
       </div>
-      <div class="form-field">
-        <label for="modal-quote-details">Details</label>
-        <textarea id="modal-quote-details" rows="4"></textarea>
+      <div class="form-group">
+        <label>Service Address *</label>
+        <input type="text" id="qm-address" placeholder="123 Main St, City, State" />
       </div>
-      <button class="btn-bubble btn-bubble--primary btn-full"
-              onclick="submitQuoteModal()">
-        Send Quote Request
-      </button>
+      <div class="form-group">
+        <label>Details / Notes</label>
+        <textarea id="qm-details" placeholder="Tell us more about your property or what you need..."></textarea>
+      </div>
+      <button class="btn-bubble btn-bubble--primary btn-bubble--lg btn-full" onclick="submitQuoteModal()">Send Quote Request</button>
+      <p class="form-note">We'll respond within 24 hours. No spam, ever.</p>
     </div>
   </div>
 
   <!-- CONFIRMATION MODAL -->
   <div class="modal-overlay" id="confirm-modal">
-    <div class="modal modal-confirm">
-      <button class="modal-close" onclick="closeModal('confirm-modal')">✕</button>
-      <div class="confirm-emoji">✅</div>
-      <h3>Booking Confirmed!</h3>
-      <p id="confirm-message">Your booking is complete.</p>
-      <button class="btn-bubble btn-bubble--primary btn-full"
-              onclick="closeModal('confirm-modal')">
-        Done
-      </button>
+    <div class="modal modal--confirm">
+      <div class="confirm-icon">✅</div>
+      <h3 class="modal-title" id="confirm-title">Request Sent!</h3>
+      <p id="confirm-message"></p>
+      <button class="btn-bubble btn-bubble--primary btn-bubble--lg btn-full" onclick="closeModal('confirm-modal')">Done</button>
     </div>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
+EOF
